@@ -46,7 +46,7 @@ def generate_image(prompt):
 # Use GPT-3 to generate an answer to a question
 async def generate_answer(question):
     response = openai.Completion.create(
-        engine="text-davinci-002",
+        engine="text-curie-001",
         prompt=question,
         max_tokens=1024,
         temperature=0.75,
@@ -54,6 +54,7 @@ async def generate_answer(question):
     return response["choices"][0]["text"]
 
 @bot.hybrid_command(name = "restart", with_app_command = True, description = "Restart the bot")
+@commands.is_owner()
 async def restart(ctx: commands.Context):
     # Log the bot out of Discord and close the connection
     await logout()
@@ -63,6 +64,7 @@ async def restart(ctx: commands.Context):
     await ctx.reply('Bot successfully restarted!')
 
 @bot.hybrid_command(name = "shutdown", with_app_command = True, description = "Shut down the bot")
+@commands.is_owner()
 async def shutdown(ctx: commands.Context):
     # Close the bot's connection to Discord
     await ctx.reply('Shutting down...')
